@@ -2,14 +2,14 @@
 using InventoryManagmentSystem.DTO.Products;
 using InventoryManagmentSystem.DTO;
 
-using InventoryManagmentSystem.Features.Products.Queries;
+using InventoryManagmentSystem.Features.Products.Queries.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using InventoryClassLibrary.DTO;
 using InventoryClassLibrary.Enums;
 using InventoryClassLibrary.DTO.Products;
-using InventoryManagmentSystem.Features.Products.Commands;
+using InventoryManagmentSystem.Features.Products.Commands.Requests;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 

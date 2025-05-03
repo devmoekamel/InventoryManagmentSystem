@@ -109,8 +109,7 @@ namespace InventoryManagmentSystem
                     });
             });
 
-            builder.Services.AddHangfire(h=>h.UseSqlServerStorage(builder.Configuration.GetConnectionString("DBCS")));
-            builder.Services.AddHangfireServer();
+        
 
             Serilog.Log.Logger = new LoggerConfiguration()
                 .Enrich.WithEnvironmentName()
@@ -120,7 +119,8 @@ namespace InventoryManagmentSystem
                     connectionString: builder.Configuration.GetConnectionString("cs"),
                     sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true }
                 ).CreateLogger();
-
+            builder.Services.AddHangfire(h => h.UseSqlServerStorage(builder.Configuration.GetConnectionString("cs")));
+            builder.Services.AddHangfireServer();
             var app = builder.Build();
 
             app.UseMiddleware<TransactionMiddleware>();

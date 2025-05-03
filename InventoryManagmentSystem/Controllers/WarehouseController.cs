@@ -1,8 +1,8 @@
 ﻿using InventoryClassLibrary.DTO;
 using InventoryClassLibrary.DTO.Warehouses;
 using InventoryClassLibrary.Enums;
-using InventoryManagmentSystem.Features.Warehouses.Commands;
-using InventoryManagmentSystem.Features.Warehouses.Queries;
+using InventoryManagmentSystem.Features.Warehouses.Commands.Requests;
+using InventoryManagmentSystem.Features.Warehouses.Queries.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

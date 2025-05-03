@@ -1,7 +1,7 @@
 ﻿using InventoryClassLibrary.DTO;
 using InventoryClassLibrary.DTO.Reports;
 using InventoryClassLibrary.Enums;
-using InventoryManagmentSystem.Features.Reports.Queries;
+using InventoryManagmentSystem.Features.Reports.Queries.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

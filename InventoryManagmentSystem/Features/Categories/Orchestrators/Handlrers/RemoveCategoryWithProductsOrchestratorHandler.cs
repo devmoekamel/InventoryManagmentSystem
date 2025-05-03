@@ -1,8 +1,8 @@
 ﻿using InventoryClassLibrary.DTO;
 using InventoryManagmentSystem.Features.Categories.Commands.Requests;
 using InventoryManagmentSystem.Features.Categories.Orchestrators.Requests;
-using InventoryManagmentSystem.Features.Products.Commands;
-using InventoryManagmentSystem.Features.Products.Queries;
+using InventoryManagmentSystem.Features.Products.Commands.Requests;
+using InventoryManagmentSystem.Features.Products.Queries.Requests   ;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Categories.Orchestrators.Handlrers

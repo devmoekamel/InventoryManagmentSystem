@@ -2,8 +2,8 @@
 using InventoryClassLibrary.DTO.Inventories;
 using InventoryClassLibrary.Enums;
 using InventoryClassLibrary.Repos;
-using InventoryManagmentSystem.Features.Inventories.Commands;
-using InventoryManagmentSystem.Features.Inventories.Orchestrators;
+using InventoryManagmentSystem.Features.Inventories.Commands.Requests;
+using InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
