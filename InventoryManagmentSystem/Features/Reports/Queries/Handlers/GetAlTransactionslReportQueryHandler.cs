@@ -28,6 +28,8 @@ namespace InventoryManagmentSystem.Features.Reports.Queries.Handlers
                     (!reportdata.categoryId.HasValue || t.Product.CategoryId == reportdata.categoryId.Value) &&
                     (!reportdata.transactionType.HasValue || t.TransactionType == reportdata.transactionType.Value)
                 ).ProjectTo<TransactionReportDTO>()
+                .Skip((reportdata.Page - 1) * reportdata.PageSize)
+                 .Take(reportdata.PageSize)
                 .ToList();
 
 

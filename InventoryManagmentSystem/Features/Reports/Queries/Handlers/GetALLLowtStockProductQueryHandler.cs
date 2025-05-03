@@ -27,8 +27,11 @@ namespace InventoryManagmentSystem.Features.Reports.Queries.Handlers
                       (!reportdata.ToDate.HasValue || t.CreatedAt <= reportdata.ToDate) &&
                       (!reportdata.categoryId.HasValue || t.Product.CategoryId == reportdata.categoryId) &&
                       (!reportdata.ProductId.HasValue || t.ProductId == reportdata.ProductId)
-                   ).ProjectTo<ProductInventoryDTO>()
+                   )
+                   .ProjectTo<ProductInventoryDTO>()
                     .Where(p => p.IsLow == true)
+                    .Skip((reportdata.Page - 1) * reportdata.PageSize)
+                     .Take(reportdata.PageSize)
                     .ToList();
 
             return new ResultStatus
