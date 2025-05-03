@@ -46,13 +46,19 @@ namespace InventoryManagmentSystem.Features.Auth.Command.Handlers
             }
 
             const string userRole = "User";
+            const string AdminRole = "Admin";
+
             var roleExists = await _roleManager.RoleExistsAsync(userRole);
             if (!roleExists)
             {
                 await _roleManager.CreateAsync(new IdentityRole(userRole));
+                await _roleManager.CreateAsync(new IdentityRole(AdminRole));
+                await _userManager.AddToRoleAsync(newUser, AdminRole);
+
             }
 
             await _userManager.AddToRoleAsync(newUser, userRole);
+
 
             return new ResultStatus
             {

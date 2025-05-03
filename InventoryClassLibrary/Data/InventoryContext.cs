@@ -1,4 +1,5 @@
 ﻿using InventoryClassLibrary.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -39,7 +40,8 @@ namespace InventoryClassLibrary.Data
             builder.Entity<InventoryTransaction>()
                 .HasIndex(x => x.CreatedAt);
 
-            
+        
+
         }
      
     }

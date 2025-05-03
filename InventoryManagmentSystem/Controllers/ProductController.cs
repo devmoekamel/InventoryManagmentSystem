@@ -108,6 +108,8 @@ namespace InventoryManagmentSystem.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult> DeleteProduct(int id)
         {
 

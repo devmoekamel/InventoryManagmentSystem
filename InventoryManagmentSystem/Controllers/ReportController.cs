@@ -3,6 +3,7 @@ using InventoryClassLibrary.DTO.Reports;
 using InventoryClassLibrary.Enums;
 using InventoryManagmentSystem.Features.Reports.Queries.Requests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,8 @@ namespace InventoryManagmentSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+
     public class ReportController : ControllerBase
     {
         private readonly IMediator mediator;
