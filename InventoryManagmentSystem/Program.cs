@@ -1,0 +1,147 @@
+
+using AutoMapper;
+using Hangfire;
+using InventoryClassLibrary.BackgroundJobs.Concrete;
+using InventoryClassLibrary.BackgroundJobs.Interfaces;
+using InventoryClassLibrary.Data;
+using InventoryClassLibrary.Interfaces;
+using InventoryClassLibrary.Models;
+using InventoryClassLibrary.Repos;
+using InventoryClassLibrary.Services;
+using InventoryManagmentSystem.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
+using System.Diagnostics;
+using System.Text;
+
+namespace InventoryManagmentSystem
+{
+    public class Program
+    {
+        public static  void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<TransactionMiddleware>();
+            builder.Services.AddDbContext<InventoryContext>(options =>
+            {
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("cs"));
+
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                options.LogTo(log => Debug.WriteLine(log), LogLevel.Information);
+            });
+            builder.Services
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<InventoryContext>();
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GeneralRepository<>));
+
+            builder.Services.AddScoped<ITransactionNotifier, TransactionNotifier>();
+            builder.Services.AddScoped<IProductNotifier, ProductNotifier>();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = builder.Configuration["JWT:Iss"],
+                    ValidAudience = builder.Configuration["JWT:Aud"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+                };
+            });
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.Load("InventoryClassLibrary"));
+            builder.Services.AddMediatR(opts =>
+                opts.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            builder.Services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Inventory management system",
+                    Description = " "
+                });
+                // To Enable authorization using Swagger (JWT)    
+                swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                });
+                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                    new OpenApiSecurityScheme
+                    {
+                    Reference = new OpenApiReference
+                    {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                    }
+                    },
+                    new string[] {}
+                    }
+                    });
+            });
+
+            builder.Services.AddHangfire(h=>h.UseSqlServerStorage(builder.Configuration.GetConnectionString("DBCS")));
+            builder.Services.AddHangfireServer();
+
+            Serilog.Log.Logger = new LoggerConfiguration()
+                .Enrich.WithEnvironmentName()
+                .Enrich.WithMachineName()
+                .WriteTo.Seq("http://localhost:5341")
+                .WriteTo.MSSqlServer(
+                    connectionString: builder.Configuration.GetConnectionString("cs"),
+                    sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true }
+                ).CreateLogger();
+
+            var app = builder.Build();
+
+            app.UseMiddleware<TransactionMiddleware>();
+
+            MapperService.Mapper = app.Services.GetService<IMapper>();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseAuthorization();
+            app.UseHangfireDashboard("/HangfireDash");
+            RecurringJob.AddOrUpdate<ITransactionNotifier>( i=> i.aa(),Cron.MinuteInterval(1));
+
+            app.MapControllers();
+
+            app.Run();
+        }
+        }
+        }
+
+
