@@ -135,7 +135,9 @@ namespace InventoryManagmentSystem
 
             app.UseAuthorization();
             app.UseHangfireDashboard("/HangfireDash");
-            RecurringJob.AddOrUpdate<ITransactionNotifier>( i=> i.aa(),Cron.MinuteInterval(1));
+            RecurringJob.AddOrUpdate<ITransactionNotifier>( i=> i.ArchieveTranssactionThanYear(),Cron.Monthly);
+            RecurringJob.AddOrUpdate<IProductNotifier>(p => p.CheckProductStock(), Cron.Daily);
+
 
             app.MapControllers();
 

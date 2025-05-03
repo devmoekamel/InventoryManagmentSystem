@@ -9,6 +9,5 @@ namespace InventoryClassLibrary.BackgroundJobs.Interfaces
     public interface ITransactionNotifier
     {
         Task ArchieveTranssactionThanYear();
-        void aa();
     }
 }
