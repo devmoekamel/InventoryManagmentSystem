@@ -1,6 +1,6 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Warehouses.Commands.Requests;
 using MediatR;
 

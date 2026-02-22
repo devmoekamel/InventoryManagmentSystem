@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
 using InventoryManagmentSystem.Features.Inventories.Commands.Requests;
 using InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests;
 using InventoryManagmentSystem.Features.Transactions.Commands.Requests;

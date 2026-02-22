@@ -1,12 +1,12 @@
-﻿using InventoryClassLibrary.DTO.Inventories;
-using InventoryClassLibrary.DTO;
+﻿using InventoryManagmentSystem.Core.DTO.Inventories;
+using InventoryManagmentSystem.Core.DTO;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Inventories.Commands.Requests
 {
     public class TransferProductStockCommand : IRequest<ResultStatus>
     {
-        public TranactionDTO TranactionDTO;
+        public TransactionDTO TransactionDTO;
     }
 
 }

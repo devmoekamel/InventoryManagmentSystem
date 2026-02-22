@@ -1,4 +1,4 @@
-﻿using InventoryManagmentSystem.DTO.Products;
+﻿using InventoryManagmentSystem.Core.DTO.Products;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Products.Queries.Requests

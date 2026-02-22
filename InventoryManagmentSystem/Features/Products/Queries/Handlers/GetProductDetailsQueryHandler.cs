@@ -1,9 +1,9 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
-using InventoryClassLibrary.Services;
-using InventoryManagmentSystem.DTO.Products;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
+using InventoryManagmentSystem.Core.Services;
+using InventoryManagmentSystem.Core.DTO.Products;
 using InventoryManagmentSystem.Features.Products.Queries.Requests;
 using MediatR;
 

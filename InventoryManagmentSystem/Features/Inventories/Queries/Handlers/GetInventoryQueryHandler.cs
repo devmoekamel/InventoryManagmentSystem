@@ -1,7 +1,7 @@
-﻿using InventoryClassLibrary.DTO.Inventories;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
-using InventoryClassLibrary.Services;
+﻿using InventoryManagmentSystem.Core.DTO.Inventories;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
+using InventoryManagmentSystem.Core.Services;
 using InventoryManagmentSystem.Features.Inventories.Queries.Requests;
 using MediatR;
 

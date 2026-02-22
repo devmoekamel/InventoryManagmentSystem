@@ -1,9 +1,8 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
-using InventoryManagmentSystem.DTO.Products;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.DTO.Products;
 using InventoryManagmentSystem.Features.Inventories.Commands.Requests;
 using InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests;
-using InventoryManagmentSystem.Features.Logs.Notifications.InventoryManagmentSystem.Notifications;
 using InventoryManagmentSystem.Features.Products.Queries.Requests;
 using InventoryManagmentSystem.Features.Transactions.Commands.Requests;
 using MediatR;
@@ -23,7 +22,7 @@ namespace InventoryManagmentSystem.Features.Inventories.Orchestrators.Handlers
         {
             ResultStatus Transferresult = await mediator.Send(new TransferProductStockCommand
             {
-                TranactionDTO = request.TranactionDTO
+                TransactionDTO = request.TransactionDTO
             });
 
 
@@ -34,26 +33,19 @@ namespace InventoryManagmentSystem.Features.Inventories.Orchestrators.Handlers
 
 
             ResultStatus resultStatus = await mediator.Send(new GetProductDetailsQuery
-            { ProductId = request.TranactionDTO.ProductId });
+            { ProductId = request.TransactionDTO.ProductId });
 
             ProductDTO product = resultStatus.Data;
             if (product.Quantity < product.LowStockThreshold)
             {
-                await mediator.Publish(new LowStockNotification
-                {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    CurrentQuantity = product.Quantity,
-                    LowStockThreshold = product.LowStockThreshold,
-                    UserId = request.UserId
-                });
+                // TODO: Add LowStockNotification handling
             }
             ResultStatus Transactionresult = await mediator.Send(new AddTransactionCommand
             {
-                ProductId = request.TranactionDTO.ProductId,
-                ToWarehouseId = request.TranactionDTO.TOWarehouseId,
-                FromWarehouseId = request.TranactionDTO.FromWarehouseId,
-                Stock = request.TranactionDTO.Stock,
+                ProductId = request.TransactionDTO.ProductId,
+                ToWarehouseId = request.TransactionDTO.TOWarehouseId,
+                FromWarehouseId = request.TransactionDTO.FromWarehouseId,
+                Stock = request.TransactionDTO.Stock,
                 TransactionType = TransactionType.Transfer,
                 UserId = request.UserId
             });

@@ -1,13 +1,11 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.DTO.Auth;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Models;
+using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.DTO.Auth;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Auth.Command.Requests;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

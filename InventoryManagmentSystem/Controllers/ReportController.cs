@@ -1,6 +1,6 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.DTO.Reports;
-using InventoryClassLibrary.Enums;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.DTO.Reports;
+using InventoryManagmentSystem.Core.Enums;
 using InventoryManagmentSystem.Features.Reports.Queries.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

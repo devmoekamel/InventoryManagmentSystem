@@ -1,11 +1,11 @@
-﻿using InventoryClassLibrary.DTO.Warehouses;
-using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO.Warehouses;
+using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Warehouses.Queries.Requests;
 using MediatR;
-using InventoryClassLibrary.Services;
+using InventoryManagmentSystem.Core.Services;
 
 namespace InventoryManagmentSystem.Features.Warehouses.Queries.Handlers
 {

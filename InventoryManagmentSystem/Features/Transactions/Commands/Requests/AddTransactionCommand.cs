@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Transactions.Commands.Requests

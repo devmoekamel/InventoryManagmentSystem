@@ -1,10 +1,10 @@
-﻿using InventoryClassLibrary.DTO.Reports;
-using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO.Reports;
+using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Reports.Queries.Requests;
 using MediatR;
-using InventoryClassLibrary.Services;
+using InventoryManagmentSystem.Core.Services;
 
 namespace InventoryManagmentSystem.Features.Reports.Queries.Handlers
 {

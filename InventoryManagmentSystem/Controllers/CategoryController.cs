@@ -1,6 +1,6 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.DTO.Categories;
-using InventoryClassLibrary.Enums;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.DTO.Categories;
+using InventoryManagmentSystem.Core.Enums;
 using InventoryManagmentSystem.Features.Categories.Commands.Requests;
 using InventoryManagmentSystem.Features.Categories.Orchestrators.Requests;
 using InventoryManagmentSystem.Features.Categories.Queries.Requests;

@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Auth.Command.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

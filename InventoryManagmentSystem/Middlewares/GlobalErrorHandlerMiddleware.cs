@@ -1,6 +1,6 @@
 ﻿
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Repos;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Repos;
 
 namespace WebApplication1.Middlewares
 {

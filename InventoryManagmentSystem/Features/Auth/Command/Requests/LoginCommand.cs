@@ -1,4 +1,4 @@
-﻿using InventoryClassLibrary.DTO.Auth;
+﻿using InventoryManagmentSystem.Core.DTO.Auth;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Auth.Command.Requests

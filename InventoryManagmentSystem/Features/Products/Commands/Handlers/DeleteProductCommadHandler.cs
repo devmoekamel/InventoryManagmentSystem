@@ -1,7 +1,7 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Products.Commands.Requests;
 using MediatR;
 

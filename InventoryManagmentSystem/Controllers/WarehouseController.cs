@@ -1,6 +1,6 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.DTO.Warehouses;
-using InventoryClassLibrary.Enums;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.DTO.Warehouses;
+using InventoryManagmentSystem.Core.Enums;
 using InventoryManagmentSystem.Features.Warehouses.Commands.Requests;
 using InventoryManagmentSystem.Features.Warehouses.Queries.Requests;
 using MediatR;

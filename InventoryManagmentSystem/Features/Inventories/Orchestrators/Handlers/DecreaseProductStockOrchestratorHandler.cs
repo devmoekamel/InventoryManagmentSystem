@@ -1,15 +1,14 @@
-﻿using InventoryClassLibrary.DTO.Products;
-using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.DTO.Products;
+using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Inventories.Commands.Requests;
 using InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests;
-using InventoryManagmentSystem.Features.Logs.Notifications.InventoryManagmentSystem.Notifications;
 using InventoryManagmentSystem.Features.Products.Queries.Requests;
 using InventoryManagmentSystem.Features.Transactions.Commands.Requests;
 using MediatR;
-using InventoryClassLibrary.Services;
+using InventoryManagmentSystem.Core.Services;
 using InventoryManagmentSystem.Features.Products.Commands.Requests;
 
 namespace InventoryManagmentSystem.Features.Inventories.Orchestrators.Handlers
@@ -53,14 +52,7 @@ namespace InventoryManagmentSystem.Features.Inventories.Orchestrators.Handlers
             }
             if (product.Quantity < product.LowStockThreshold)
             {
-                await mediator.Publish(new LowStockNotification
-                {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    CurrentQuantity = product.Quantity,
-                    LowStockThreshold = product.LowStockThreshold,
-                    UserId = request.UserId
-                });
+                // TODO: Add LowStockNotification handling
             }
             ResultStatus TransactionStatus = await mediator.Send(new AddTransactionCommand
             {

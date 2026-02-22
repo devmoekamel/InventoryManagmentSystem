@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
+﻿using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
 using InventoryManagmentSystem.Features.Transactions.Commands.Requests;
 using MediatR;
 

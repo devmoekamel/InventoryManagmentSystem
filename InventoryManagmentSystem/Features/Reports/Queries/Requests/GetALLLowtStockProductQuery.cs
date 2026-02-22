@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.DTO.Reports;
-using InventoryClassLibrary.DTO;
+﻿using InventoryManagmentSystem.Core.DTO.Reports;
+using InventoryManagmentSystem.Core.DTO;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Reports.Queries.Requests

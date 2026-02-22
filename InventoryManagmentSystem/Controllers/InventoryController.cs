@@ -1,7 +1,7 @@
-﻿using InventoryClassLibrary.DTO;
-using InventoryClassLibrary.DTO.Inventories;
-using InventoryClassLibrary.Enums;
-using InventoryClassLibrary.Repos;
+﻿using InventoryManagmentSystem.Core.DTO;
+using InventoryManagmentSystem.Core.DTO.Inventories;
+using InventoryManagmentSystem.Core.Enums;
+using InventoryManagmentSystem.Core.Repos;
 using InventoryManagmentSystem.Features.Inventories.Commands.Requests;
 using InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests;
 using MediatR;
@@ -88,7 +88,7 @@ namespace InventoryManagmentSystem.Controllers
         }
 
         [HttpPost("TransferStock")]
-        public async Task<ActionResult> TransferProductStock(TranactionDTO TranactionDTO)
+        public async Task<ActionResult> TransferProductStock(TransactionDTO TransactionDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace InventoryManagmentSystem.Controllers
             ResultStatus Result = await mediator.Send(new 
             TransferProductStockOrchestrator
             {
-               TranactionDTO= TranactionDTO,
+               TransactionDTO= TransactionDTO,
                UserId = userId
 
             });

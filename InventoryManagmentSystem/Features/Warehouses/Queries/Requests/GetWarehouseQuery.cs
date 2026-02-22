@@ -1,4 +1,4 @@
-﻿using InventoryClassLibrary.DTO.Warehouses;
+﻿using InventoryManagmentSystem.Core.DTO.Warehouses;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Warehouses.Queries.Requests

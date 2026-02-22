@@ -1,4 +1,4 @@
-﻿using InventoryClassLibrary.DTO;
+﻿using InventoryManagmentSystem.Core.DTO;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Inventories.Orchestrators.Requests

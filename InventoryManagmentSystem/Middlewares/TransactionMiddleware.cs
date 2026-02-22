@@ -1,4 +1,4 @@
-﻿using InventoryClassLibrary.Data;
+﻿using InventoryManagmentSystem.Core.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace InventoryManagmentSystem.Middlewares

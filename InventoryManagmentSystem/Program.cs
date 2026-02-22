@@ -1,13 +1,14 @@
 
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Hangfire;
-using InventoryClassLibrary.BackgroundJobs.Concrete;
-using InventoryClassLibrary.BackgroundJobs.Interfaces;
-using InventoryClassLibrary.Data;
-using InventoryClassLibrary.Interfaces;
-using InventoryClassLibrary.Models;
-using InventoryClassLibrary.Repos;
-using InventoryClassLibrary.Services;
+using InventoryManagmentSystem.Core.BackgroundJobs.Concrete;
+using InventoryManagmentSystem.Core.BackgroundJobs.Interfaces;
+using InventoryManagmentSystem.Core.Data;
+using InventoryManagmentSystem.Core.Interfaces;
+using InventoryManagmentSystem.Core.Models;
+using InventoryManagmentSystem.Core.Repos;
 using InventoryManagmentSystem.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -71,7 +72,9 @@ namespace InventoryManagmentSystem
                 };
             });
 
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.Load("InventoryClassLibrary"));
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
             builder.Services.AddMediatR(opts =>
                 opts.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
@@ -124,8 +127,6 @@ namespace InventoryManagmentSystem
             var app = builder.Build();
 
             app.UseMiddleware<TransactionMiddleware>();
-
-            MapperService.Mapper = app.Services.GetService<IMapper>();
 
             if (app.Environment.IsDevelopment())
             {

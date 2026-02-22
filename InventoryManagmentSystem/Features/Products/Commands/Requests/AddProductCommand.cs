@@ -1,5 +1,5 @@
-﻿using InventoryClassLibrary.DTO.Products;
-using InventoryClassLibrary.DTO;
+﻿using InventoryManagmentSystem.Core.DTO.Products;
+using InventoryManagmentSystem.Core.DTO;
 using MediatR;
 
 namespace InventoryManagmentSystem.Features.Products.Commands.Requests
