@@ -8,7 +8,9 @@ using InventoryManagmentSystem.Core.BackgroundJobs.Interfaces;
 using InventoryManagmentSystem.Core.Data;
 using InventoryManagmentSystem.Core.Interfaces;
 using InventoryManagmentSystem.Core.Models;
-using InventoryManagmentSystem.Core.Repos;
+using InventoryManagmentSystem.Domain.UnitOfWork;
+using InventoryManagmentSystem.EndPoints;
+using InventoryManagmentSystem.Infrastructure.Persistence.Repositories;
 using InventoryManagmentSystem.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -24,17 +26,12 @@ namespace InventoryManagmentSystem
 {
     public class Program
     {
-        public static  void Main(string[] args)
+        public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<TransactionMiddleware>();
             builder.Services.AddDbContext<InventoryContext>(options =>
             {
                 options.UseSqlServer(
@@ -47,7 +44,9 @@ namespace InventoryManagmentSystem
                 .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<InventoryContext>();
 
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GeneralRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped(typeof(Core.Interfaces.IGenericRepository<>), typeof(Repository<>));
 
             builder.Services.AddScoped<ITransactionNotifier, TransactionNotifier>();
             builder.Services.AddScoped<IProductNotifier, ProductNotifier>();
@@ -86,7 +85,6 @@ namespace InventoryManagmentSystem
                     Title = "Inventory management system",
                     Description = " "
                 });
-                // To Enable authorization using Swagger (JWT)    
                 swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -112,8 +110,6 @@ namespace InventoryManagmentSystem
                     });
             });
 
-        
-
             Serilog.Log.Logger = new LoggerConfiguration()
                 .Enrich.WithEnvironmentName()
                 .Enrich.WithMachineName()
@@ -124,9 +120,10 @@ namespace InventoryManagmentSystem
                 ).CreateLogger();
             builder.Services.AddHangfire(h => h.UseSqlServerStorage(builder.Configuration.GetConnectionString("cs")));
             builder.Services.AddHangfireServer();
+            
             var app = builder.Build();
 
-            app.UseMiddleware<TransactionMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
@@ -134,17 +131,26 @@ namespace InventoryManagmentSystem
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard("/HangfireDash");
-            RecurringJob.AddOrUpdate<ITransactionNotifier>( i=> i.ArchieveTranssactionThanYear(),Cron.Monthly);
+            RecurringJob.AddOrUpdate<ITransactionNotifier>(i => i.ArchieveTranssactionThanYear(), Cron.Monthly);
             RecurringJob.AddOrUpdate<IProductNotifier>(p => p.CheckProductStock(), Cron.Daily);
 
+            var globalGroup = app.MapGroup("");
 
-            app.MapControllers();
+            var endpointDefinitions = typeof(Program).Assembly
+                .GetTypes()
+                .Where(t => typeof(EndpointDefinition).IsAssignableFrom(t) && !t.IsAbstract)
+                .Select(Activator.CreateInstance)
+                .Cast<EndpointDefinition>();
+
+            foreach (var endpoint in endpointDefinitions)
+            {
+                endpoint.RegisterEndpoints(globalGroup);
+            }
 
             app.Run();
         }
-        }
-        }
-
-
+    }
+}
